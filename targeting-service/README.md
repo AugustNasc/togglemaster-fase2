@@ -1,18 +1,18 @@
 # targeting-service (Python)
 
-Este � o servi�o de regras de segmenta��o (targeting) do projeto ToggleMaster. Ele � respons�vel por gerenciar regras complexas (ex: "50% dos usu�rios", "usu�rios do pa�s X") para uma feature flag espec�fica.
+Este é o serviço de regras de segmentação (targeting) do projeto ToggleMaster. Ele é responsável por gerenciar regras complexas (ex: "50% dos usuários", "usuários do país X") para uma feature flag específica.
 
-**IMPORTANTE:** Este servi�o tamb�m � protegido e depende que o `auth-service` esteja rodando (ex: em `http://localhost:8001`).
+**IMPORTANTE:** Este serviço também é protegido e depende que o `auth-service` esteja rodando (ex: em `http://localhost:8001`).
 
-## ?? Pr�-requisitos (Local)
+## 📦 Pré-requisitos (Local)
 
-* [Python](https://www.python.org/) (vers�o 3.9 ou superior)
+* [Python](https://www.python.org/) (versão 3.9 ou superior)
 * [PostgreSQL](https://www.postgresql.org/download/)
 * O `auth-service` deve estar rodando.
 
-## ?? Rodando Localmente
+## 🚀 Rodando Localmente
 
-1.  **Clone o reposit�rio** e entre na pasta `targeting-service`.
+1.  **Clone o repositório** e entre na pasta `targeting-service`.
 
 2.  **Prepare o Banco de Dados:**
     * Crie um banco de dados no seu PostgreSQL (ex: `targeting_db`).
@@ -21,41 +21,41 @@ Este � o servi�o de regras de segmenta��o (targeting) do projeto ToggleM
         psql -U seu_usuario -d targeting_db -f db/init.sql
         ```
 
-3.  **Configure as Vari�veis de Ambiente:**
-    Crie um arquivo chamado `.env` na raiz desta pasta (`targeting-service/`) com o seguinte conte�do:
+3.  **Configure as Variáveis de Ambiente:**
+    Crie um arquivo chamado `.env` na raiz desta pasta (`targeting-service/`) com o seguinte conteúdo:
     ```.env
-    # String de conex�o do seu banco de dados PostgreSQL
+    # String de conexão do seu banco de dados PostgreSQL
     DATABASE_URL="postgres://SEU_USUARIO:SUA_SENHA@localhost:5432/targeting_db"
     
-    # Porta que este servi�o (targeting-service) ir� rodar
+    # Porta que este serviço (targeting-service) irá rodar
     PORT="8003"
     
     # URL do auth-service (que deve estar rodando na porta 8001)
     AUTH_SERVICE_URL="http://localhost:8001"
     ```
 
-4.  **Instale as Depend�ncias:**
+4.  **Instale as Dependências:**
     ```bash
     pip install -r requirements.txt
     ```
 
-5.  **Inicie o Servi�o:**
+5.  **Inicie o Serviço:**
     ```bash
     gunicorn --bind 0.0.0.0:8003 app:app
     ```
-    O servidor estar� rodando em `http://localhost:8003`.
+    O servidor estará rodando em `http://localhost:8003`.
 
-## ?? Testando os Endpoints
+## 🧪 Testando os Endpoints
 
 Lembre-se de obter sua `SUA_CHAVE_API` no `auth-service` (veja o README do `flag-service`).
 
-**1. Verifique a Sa�de (Health Check):**
+**1. Verifique a Saúde (Health Check):**
 ```bash
 curl http://localhost:8003/health
 ```
-Sa�da esperada: `{"status":"ok"}`
+Saída esperada: `{"status":"ok"}`
 
-**2. Crie uma nova Regra de Segmenta��o:** Vamos criar uma regra para a flag enable-new-dashboard (que voc� criou no flag-service). Esta regra far� a flag aparecer para 50% dos usu�rios.
+**2. Crie uma nova Regra de Segmentação:** Vamos criar uma regra para a flag enable-new-dashboard (que você criou no flag-service). Esta regra fará a flag aparecer para 50% dos usuários.
 ```bash
 curl -X POST http://localhost:8003/rules \
 -H "Content-Type: application/json" \
@@ -69,14 +69,14 @@ curl -X POST http://localhost:8003/rules \
     }
 }'
 ```
-Sa�da esperada: (Um JSON com os dados da regra criada).
+Saída esperada: (Um JSON com os dados da regra criada).
 
-**3. Busque a Regra que voc� criou:**
+**3. Busque a Regra que você criou:**
 ```bash
 curl http://localhost:8003/rules/enable-new-dashboard \
 -H "Authorization: Bearer SUA_CHAVE_API"
 ```
-Sa�da esperada: (O JSON da regra que voc� acabou de criar).
+Saída esperada: (O JSON da regra que você acabou de criar).
 
 **4. Atualize a Regra (mude para 75%):**
 ```bash
@@ -90,4 +90,4 @@ curl -X PUT http://localhost:8003/rules/enable-new-dashboard \
     }
 }'
 ```
-Sa�da esperada: (O JSON da regra atualizada, com `"value": 75`).
+Saída esperada: (O JSON da regra atualizada, com `"value": 75`).

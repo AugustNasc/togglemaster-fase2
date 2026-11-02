@@ -18,7 +18,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# --- Configura��o ---
+# --- Configuração ---
 DATABASE_URL = os.getenv("DATABASE_URL")
 AUTH_SERVICE_URL = os.getenv("AUTH_SERVICE_URL")
 
@@ -26,23 +26,23 @@ if not DATABASE_URL or not AUTH_SERVICE_URL:
     log.critical("Erro: DATABASE_URL e AUTH_SERVICE_URL devem ser definidos.")
     sys.exit(1)
 
-# --- Pool de Conex�o com o Banco ---
-# Inicializa o pool de conex�es (M�n: 1, M�x: 5 conex�es)
+# --- Pool de Conexão com o Banco ---
+# Inicializa o pool de conexões (Mín: 1, Máx: 5 conexões)
 try:
     pool = SimpleConnectionPool(1, 5, dsn=DATABASE_URL)
-    log.info("Pool de conex�es com o PostgreSQL inicializado.")
+    log.info("Pool de conexões com o PostgreSQL inicializado.")
 except psycopg2.OperationalError as e:
     log.critical(f"Erro fatal ao conectar ao PostgreSQL: {e}")
     sys.exit(1)
 
-# --- Middleware de Autentica��o ---
+# --- Middleware de Autenticação ---
 def require_auth(f):
     """ Middleware para validar a chave de API contra o auth-service """
     @wraps(f)
     def decorated(*args, **kwargs):
         auth_header = request.headers.get("Authorization")
         if not auth_header:
-            return jsonify({"error": "Authorization header obrigat�rio"}), 401
+            return jsonify({"error": "Authorization header obrigatório"}), 401
         
         try:
             # Chama o /validate do auth-service
@@ -50,17 +50,17 @@ def require_auth(f):
             response = requests.get(validate_url, headers={"Authorization": auth_header}, timeout=3)
             
             if response.status_code != 200:
-                log.warning(f"Falha na valida��o da chave (status: {response.status_code})")
-                return jsonify({"error": "Chave de API inv�lida"}), 401
+                log.warning(f"Falha na validação da chave (status: {response.status_code})")
+                return jsonify({"error": "Chave de API inválida"}), 401
         
         except requests.exceptions.Timeout:
             log.error("Timeout ao conectar com o auth-service")
-            return jsonify({"error": "Servi�o de autentica��o indispon�vel (timeout)"}), 504 # Gateway Timeout
+            return jsonify({"error": "Serviço de autenticação indisponível (timeout)"}), 504 # Gateway Timeout
         except requests.exceptions.RequestException as e:
             log.error(f"Erro ao conectar com o auth-service: {e}")
-            return jsonify({"error": "Servi�o de autentica��o indispon�vel"}), 503 # Service Unavailable
+            return jsonify({"error": "Serviço de autenticação indisponível"}), 503 # Service Unavailable
 
-        # Se a chave for v�lida, continua para a rota
+        # Se a chave for válida, continua para a rota
         return f(*args, **kwargs)
     return decorated
 
@@ -73,10 +73,10 @@ def health():
 @app.route('/flags', methods=['POST'])
 @require_auth
 def create_flag():
-    """ Cria uma nova defini��o de feature flag """
+    """ Cria uma nova definição de feature flag """
     data = request.get_json()
     if not data or 'name' not in data:
-        return jsonify({"error": "'name' � obrigat�rio"}), 400
+        return jsonify({"error": "'name' é obrigatório"}), 400
     
     name = data['name']
     description = data.get('description', '')
@@ -99,7 +99,7 @@ def create_flag():
     except psycopg2.IntegrityError:
         if conn: conn.rollback()
         log.warning(f"Tentativa de criar flag duplicada: '{name}'")
-        return jsonify({"error": f"Flag '{name}' j� existe"}), 409
+        return jsonify({"error": f"Flag '{name}' já existe"}), 409
     except Exception as e:
         if conn: conn.rollback()
         log.error(f"Erro ao criar flag: {e}")
@@ -130,7 +130,7 @@ def get_flags():
 @app.route('/flags/<string:name>', methods=['GET'])
 @require_auth
 def get_flag(name):
-    """ Busca uma feature flag espec�fica pelo nome """
+    """ Busca uma feature flag específica pelo nome """
     conn = None
     cur = None
     try:
@@ -139,7 +139,7 @@ def get_flag(name):
         cur.execute("SELECT * FROM flags WHERE name = %s", (name,))
         flag = cur.fetchone()
         if not flag:
-            return jsonify({"error": "Flag n�o encontrada"}), 404
+            return jsonify({"error": "Flag não encontrada"}), 404
         return jsonify(flag)
     except Exception as e:
         log.error(f"Erro ao buscar flag '{name}': {e}")
@@ -151,15 +151,15 @@ def get_flag(name):
 @app.route('/flags/<string:name>', methods=['PUT'])
 @require_auth
 def update_flag(name):
-    """ Atualiza uma feature flag (descri��o ou status 'is_enabled') """
+    """ Atualiza uma feature flag (descrição ou status 'is_enabled') """
     data = request.get_json()
     if not data:
-        return jsonify({"error": "Corpo da requisi��o obrigat�rio"}), 400
+        return jsonify({"error": "Corpo da requisição obrigatório"}), 400
 
     fields = []
     values = []
     
-    # Constr�i a query dinamicamente
+    # Constrói a query dinamicamente
     if 'description' in data:
         fields.append("description = %s")
         values.append(data['description'])
@@ -168,9 +168,9 @@ def update_flag(name):
         values.append(data['is_enabled'])
     
     if not fields:
-        return jsonify({"error": "Pelo menos um campo ('description', 'is_enabled') � obrigat�rio"}), 400
+        return jsonify({"error": "Pelo menos um campo ('description', 'is_enabled') é obrigatório"}), 400
     
-    values.append(name) # Adiciona o 'name' para a cl�usula WHERE
+    values.append(name) # Adiciona o 'name' para a cláusula WHERE
     
     query = f"UPDATE flags SET {', '.join(fields)} WHERE name = %s RETURNING *"
     
@@ -182,7 +182,7 @@ def update_flag(name):
         cur.execute(query, tuple(values))
         
         if cur.rowcount == 0:
-            return jsonify({"error": "Flag n�o encontrada"}), 404
+            return jsonify({"error": "Flag não encontrada"}), 404
             
         updated_flag = cur.fetchone()
         conn.commit()
@@ -208,7 +208,7 @@ def delete_flag(name):
         cur.execute("DELETE FROM flags WHERE name = %s", (name,))
         
         if cur.rowcount == 0:
-            return jsonify({"error": "Flag n�o encontrada"}), 404
+            return jsonify({"error": "Flag não encontrada"}), 404
             
         conn.commit()
         log.info(f"Flag '{name}' deletada com sucesso.")

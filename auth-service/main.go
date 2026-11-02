@@ -10,20 +10,20 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// App struct (para inje��o de depend�ncia)
+// App struct (para injeção de dependência)
 type App struct {
 	DB         *sql.DB
 	MasterKey  string
 }
 
 func main() {
-	// Carrega o .env para desenvolvimento local. Em produ��o, isso n�o far� nada.
+	// Carrega o .env para desenvolvimento local. Em produção, isso não fará nada.
 	_ = godotenv.Load()
 
-	// --- Configura��o ---
+	// --- Configuração ---
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8001" // Porta padr�o
+		port = "8001" // Porta padrão
 	}
 
 	databaseURL := os.Getenv("DATABASE_URL")
@@ -36,10 +36,10 @@ func main() {
 		log.Fatal("MASTER_KEY deve ser definida")
 	}
 
-	// --- Conex�o com o Banco ---
+	// --- Conexão com o Banco ---
 	db, err := connectDB(databaseURL)
 	if err != nil {
-		log.Fatalf("N�o foi poss�vel conectar ao banco de dados: %v", err)
+		log.Fatalf("Não foi possível conectar ao banco de dados: %v", err)
 	}
 	defer db.Close()
 
@@ -52,20 +52,20 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/health", app.healthHandler)
 
-	// Endpoint p�blico para validar uma chave
+	// Endpoint público para validar uma chave
 	mux.HandleFunc("/validate", app.validateKeyHandler)
 
 	// Endpoints de "admin" para criar/gerenciar chaves
-	// Eles s�o protegidos pelo middleware de autentica��o
+	// Eles são protegidos pelo middleware de autenticação
 	mux.Handle("/admin/keys", app.masterKeyAuthMiddleware(http.HandlerFunc(app.createKeyHandler)))
 
-	log.Printf("Servi�o de Autentica��o (Go) rodando na porta %s", port)
+	log.Printf("Serviço de Autenticação (Go) rodando na porta %s", port)
 	if err := http.ListenAndServe(":"+port, mux); err != nil {
 		log.Fatal(err)
 	}
 }
 
-// connectDB inicializa e testa a conex�o com o PostgreSQL
+// connectDB inicializa e testa a conexão com o PostgreSQL
 func connectDB(databaseURL string) (*sql.DB, error) {
 	db, err := sql.Open("pgx", databaseURL)
 	if err != nil {

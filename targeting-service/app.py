@@ -19,7 +19,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# --- Configura��o ---
+# --- Configuração ---
 DATABASE_URL = os.getenv("DATABASE_URL")
 AUTH_SERVICE_URL = os.getenv("AUTH_SERVICE_URL")
 
@@ -27,37 +27,37 @@ if not DATABASE_URL or not AUTH_SERVICE_URL:
     log.critical("Erro: DATABASE_URL e AUTH_SERVICE_URL devem ser definidos.")
     sys.exit(1)
 
-# --- Pool de Conex�o com o Banco ---
+# --- Pool de Conexão com o Banco ---
 try:
     pool = SimpleConnectionPool(1, 5, dsn=DATABASE_URL)
-    log.info("Pool de conex�es com o PostgreSQL (targeting) inicializado.")
+    log.info("Pool de conexões com o PostgreSQL (targeting) inicializado.")
 except psycopg2.OperationalError as e:
     log.critical(f"Erro fatal ao conectar ao PostgreSQL: {e}")
     sys.exit(1)
 
-# --- Middleware de Autentica��o (Id�ntico ao flag-service) ---
+# --- Middleware de Autenticação (Idêntico ao flag-service) ---
 def require_auth(f):
     """ Middleware para validar a chave de API contra o auth-service """
     @wraps(f)
     def decorated(*args, **kwargs):
         auth_header = request.headers.get("Authorization")
         if not auth_header:
-            return jsonify({"error": "Authorization header obrigat�rio"}), 401
+            return jsonify({"error": "Authorization header obrigatório"}), 401
         
         try:
             validate_url = f"{AUTH_SERVICE_URL}/validate"
             response = requests.get(validate_url, headers={"Authorization": auth_header}, timeout=3)
             
             if response.status_code != 200:
-                log.warning(f"Falha na valida��o da chave (status: {response.status_code})")
-                return jsonify({"error": "Chave de API inv�lida"}), 401
+                log.warning(f"Falha na validação da chave (status: {response.status_code})")
+                return jsonify({"error": "Chave de API inválida"}), 401
         
         except requests.exceptions.Timeout:
             log.error("Timeout ao conectar com o auth-service")
-            return jsonify({"error": "Servi�o de autentica��o indispon�vel (timeout)"}), 504 # Gateway Timeout
+            return jsonify({"error": "Serviço de autenticação indisponível (timeout)"}), 504 # Gateway Timeout
         except requests.exceptions.RequestException as e:
             log.error(f"Erro ao conectar com o auth-service: {e}")
-            return jsonify({"error": "Servi�o de autentica��o indispon�vel"}), 503 # Service Unavailable
+            return jsonify({"error": "Serviço de autenticação indisponível"}), 503 # Service Unavailable
 
         return f(*args, **kwargs)
     return decorated
@@ -71,10 +71,10 @@ def health():
 @app.route('/rules', methods=['POST'])
 @require_auth
 def create_rule():
-    """ Cria uma nova regra de segmenta��o para uma flag """
+    """ Cria uma nova regra de segmentação para uma flag """
     data = request.get_json()
     if not data or 'flag_name' not in data or 'rules' not in data:
-        return jsonify({"error": "'flag_name' e 'rules' (JSON) s�o obrigat�rios"}), 400
+        return jsonify({"error": "'flag_name' e 'rules' (JSON) são obrigatórios"}), 400
     
     flag_name = data['flag_name']
     rules_obj = data['rules'] # O objeto JSON
@@ -97,7 +97,7 @@ def create_rule():
     except psycopg2.IntegrityError:
         if conn: conn.rollback()
         log.warning(f"Tentativa de criar regra duplicada: '{flag_name}'")
-        return jsonify({"error": f"Regra para a flag '{flag_name}' j� existe"}), 409
+        return jsonify({"error": f"Regra para a flag '{flag_name}' já existe"}), 409
     except Exception as e:
         if conn: conn.rollback()
         log.error(f"Erro ao criar regra: {e}")
@@ -109,7 +109,7 @@ def create_rule():
 @app.route('/rules/<string:flag_name>', methods=['GET'])
 @require_auth
 def get_rule(flag_name):
-    """ Busca uma regra de segmenta��o pelo nome da flag """
+    """ Busca uma regra de segmentação pelo nome da flag """
     conn = None
     cur = None
     try:
@@ -118,7 +118,7 @@ def get_rule(flag_name):
         cur.execute("SELECT * FROM targeting_rules WHERE flag_name = %s", (flag_name,))
         rule = cur.fetchone()
         if not rule:
-            return jsonify({"error": "Regra n�o encontrada"}), 404
+            return jsonify({"error": "Regra não encontrada"}), 404
         return jsonify(rule)
     except Exception as e:
         log.error(f"Erro ao buscar regra '{flag_name}': {e}")
@@ -130,10 +130,10 @@ def get_rule(flag_name):
 @app.route('/rules/<string:flag_name>', methods=['PUT'])
 @require_auth
 def update_rule(flag_name):
-    """ Atualiza a regra de segmenta��o de uma flag """
+    """ Atualiza a regra de segmentação de uma flag """
     data = request.get_json()
     if not data:
-        return jsonify({"error": "Corpo da requisi��o obrigat�rio"}), 400
+        return jsonify({"error": "Corpo da requisição obrigatório"}), 400
 
     fields = []
     values = []
@@ -146,9 +146,9 @@ def update_rule(flag_name):
         values.append(data['is_enabled'])
     
     if not fields:
-        return jsonify({"error": "Pelo menos um campo ('rules', 'is_enabled') � obrigat�rio"}), 400
+        return jsonify({"error": "Pelo menos um campo ('rules', 'is_enabled') é obrigatório"}), 400
     
-    values.append(flag_name) # Adiciona o 'flag_name' para a cl�usula WHERE
+    values.append(flag_name) # Adiciona o 'flag_name' para a cláusula WHERE
     
     query = f"UPDATE targeting_rules SET {', '.join(fields)} WHERE flag_name = %s RETURNING *"
     
@@ -160,7 +160,7 @@ def update_rule(flag_name):
         cur.execute(query, tuple(values))
         
         if cur.rowcount == 0:
-            return jsonify({"error": "Regra n�o encontrada"}), 404
+            return jsonify({"error": "Regra não encontrada"}), 404
             
         updated_rule = cur.fetchone()
         conn.commit()
@@ -177,7 +177,7 @@ def update_rule(flag_name):
 @app.route('/rules/<string:flag_name>', methods=['DELETE'])
 @require_auth
 def delete_rule(flag_name):
-    """ Deleta a regra de segmenta��o de uma flag """
+    """ Deleta a regra de segmentação de uma flag """
     conn = None
     cur = None
     try:
@@ -186,7 +186,7 @@ def delete_rule(flag_name):
         cur.execute("DELETE FROM targeting_rules WHERE flag_name = %s", (flag_name,))
         
         if cur.rowcount == 0:
-            return jsonify({"error": "Regra n�o encontrada"}), 404
+            return jsonify({"error": "Regra não encontrada"}), 404
             
         conn.commit()
         log.info(f"Regra para '{flag_name}' deletada com sucesso.")

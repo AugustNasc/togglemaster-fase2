@@ -1,0 +1,16 @@
+{
+  "coleta": "2026-11-02T22:48:50.399570+00:00",
+  "conta": "699191579246",
+  "regiao": "us-east-2",
+  "cluster": "togglemaster-fase2",
+  "url": "http://k8s-nginxing-togglema-8f6e8dfb5a-abc942c96fbc4fd8.elb.us-east-2.amazonaws.com/evaluate?user_id=gravacao&flag_name=demo-1f90cc27",
+  "avaliacao": {"flag_name": "demo-1f90cc27", "user_id": "gravacao", "result": true},
+  "rotas_internas": {"/flags": 404, "/rules": 404, "/auth/admin/keys": 404},
+  "nos": [
+    {"nome": "ip-172-31-1-193.us-east-2.compute.internal", "ready": true},
+    {"nome": "ip-172-31-20-231.us-east-2.compute.internal", "ready": true},
+    {"nome": "ip-172-31-44-22.us-east-2.compute.internal", "ready": true}
+  ],
+  "funcional_executado_agora": true,
+  "ressalvas": ["Dois RDS; o enunciado pede tres.", "Compose local precisa de validacao separada."]
+}

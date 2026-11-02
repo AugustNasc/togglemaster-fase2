@@ -1,19 +1,19 @@
 CREATE TABLE IF NOT EXISTS flags (
     id SERIAL PRIMARY KEY,
 
-    -- 'name' � a chave de neg�cio �nica (ex: 'enable-new-checkout')
+    -- 'name' é a chave de negócio única (ex: 'enable-new-checkout')
     name VARCHAR(100) UNIQUE NOT NULL, 
     
     description TEXT,
     
-    -- Este � o 'kill switch' global. Se for false, a flag est� desativada para todos.
+    -- Este é o 'kill switch' global. Se for false, a flag está desativada para todos.
     is_enabled BOOLEAN NOT NULL DEFAULT false,
     
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Opcional, mas boa pr�tica: Trigger para atualizar 'updated_at' automaticamente
+-- Opcional, mas boa prática: Trigger para atualizar 'updated_at' automaticamente
 CREATE OR REPLACE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -22,7 +22,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Remove o trigger se j� existir, para evitar erro na recria��o
+-- Remove o trigger se já existir, para evitar erro na recriação
 DROP TRIGGER IF EXISTS set_timestamp ON flags;
 
 CREATE TRIGGER set_timestamp

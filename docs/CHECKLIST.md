@@ -1,32 +1,32 @@
 # Checklist para entregar
 
-## Conclu�do e registrado
+## Concluído e registrado
 
-- [x] Cinco Dockerfiles, imagens constru�das e publicadas no ECR.
-- [x] EKS, workers e cinco servi�os dispon�veis.
-- [x] PostgreSQL com tr�s databases; Redis com TLS; SQS e DynamoDB.
+- [x] Cinco Dockerfiles, imagens construídas e publicadas no ECR.
+- [x] EKS, workers e cinco serviços disponíveis.
+- [x] PostgreSQL com três databases; Redis com TLS; SQS e DynamoDB.
 - [x] Namespaces, ClusterIP, Secrets, ConfigMaps, probes e limites.
-- [x] Ingress NGINX e chamada HTTP p�blica pelo CloudShell.
-- [x] Smoke test completo at� o DynamoDB.
+- [x] Ingress NGINX e chamada HTTP pública pelo CloudShell.
+- [x] Smoke test completo até o DynamoDB.
 - [x] HPAs por CPU de evaluation e analytics, escala 1 -> 5 observada.
 - [x] Registro dos 112 erros da carga, sem ocultar falhas.
 - [x] Lote adicional com 1.000 eventos persistidos; fila drenada.
 
-## Voc� precisa concluir
+## Você precisa concluir
 
-- [ ] Iniciar Docker e executar os nove servi�os do Compose; gravar `docker compose ps` e o teste local.
-- [ ] Confirmar com o professor a adapta��o de dois RDS; o requisito literal � tr�s inst�ncias independentes.
-- [x] Criar o reposit�rio privado https://github.com/AugustNasc/togglemaster-fase2.
-- [ ] Liberar acesso ao reposit�rio para avalia��o e conferir o conte�do publicado.
-- [x] Integrante �nico: Augusto Nascimento de Almeida; RM 376571; e-mail rm376571@fiap.com.br; Discord `thecash` (exibi��o: TheCash).
-- [ ] Gravar o v�deo (at� 20 minutos), seguindo `ROTEIRO-VIDEO.md`, e copiar o link acess�vel.
-- [ ] Preencher links do reposit�rio e do v�deo, revisar e gerar a vers�o final do relat�rio PDF.
-- [ ] Validar abertura do endpoint pela rede usada na grava��o; houve resposta p�blica no CloudShell, mas o Chrome local apresentou erro.
-- [ ] Conferir permiss�es de acesso do v�deo/reposit�rio e enviar pela plataforma da FIAP.
+- [ ] Iniciar Docker e executar os nove serviços do Compose; gravar `docker compose ps` e o teste local.
+- [ ] Confirmar com o professor a adaptação de dois RDS; o requisito literal é três instâncias independentes.
+- [x] Criar o repositório privado https://github.com/AugustNasc/togglemaster-fase2.
+- [ ] Liberar acesso ao repositório para avaliação e conferir o conteúdo publicado.
+- [x] Integrante único: Augusto Nascimento de Almeida; RM 376571; e-mail rm376571@fiap.com.br; Discord `thecash` (exibição: TheCash).
+- [ ] Gravar o vídeo (até 20 minutos), seguindo `ROTEIRO-VIDEO.md`, e copiar o link acessível.
+- [ ] Preencher links do repositório e do vídeo, revisar e gerar a versão final do relatório PDF.
+- [ ] Validar abertura do endpoint pela rede usada na gravação; houve resposta pública no CloudShell, mas o Chrome local apresentou erro.
+- [ ] Conferir permissões de acesso do vídeo/repositório e enviar pela plataforma da FIAP.
 
-## Ap�s a apresenta��o
+## Após a apresentação
 
-- [ ] Remover os recursos tempor�rios de bootstrap de `tm-setup` ap�s confer�ncia.
-- [ ] Guardar evid�ncias e dados necess�rios e revisar os recursos AWS ativos antes do encerramento.
+- [ ] Remover os recursos temporários de bootstrap de `tm-setup` após conferência.
+- [ ] Guardar evidências e dados necessários e revisar os recursos AWS ativos antes do encerramento.
 
-O PDF incluso � uma vers�o revis�vel. N�o o envie com campos PENDENTE.
+O PDF incluso é uma versão revisável. Não o envie com campos PENDENTE.

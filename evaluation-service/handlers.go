@@ -26,18 +26,18 @@ func (a *App) evaluationHandler(w http.ResponseWriter, r *http.Request) {
 	flagName := r.URL.Query().Get("flag_name")
 
 	if userID == "" || flagName == "" {
-		http.Error(w, `{"error": "user_id e flag_name s�o obrigat�rios"}`, http.StatusBadRequest)
+		http.Error(w, `{"error": "user_id e flag_name são obrigatórios"}`, http.StatusBadRequest)
 		return
 	}
 
-	// 2. Obter a decis�o (l�gica de cache/servi�o est� em evaluator.go)
+	// 2. Obter a decisão (lógica de cache/serviço está em evaluator.go)
 	result, err := a.getDecision(userID, flagName)
 	if err != nil {
-		// Se o erro for "n�o encontrado", retornamos 'false' (comportamento seguro)
+		// Se o erro for "não encontrado", retornamos 'false' (comportamento seguro)
 		if _, ok := err.(*NotFoundError); ok {
 			result = false
 		} else {
-			// Outros erros (servi�os offline, etc)
+			// Outros erros (serviços offline, etc)
 			log.Printf("Erro ao avaliar flag '%s': %v", flagName, err)
 			http.Error(w, `{"error": "Erro interno ao avaliar a flag"}`, http.StatusBadGateway)
 			return
@@ -45,7 +45,7 @@ func (a *App) evaluationHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 3. Enviar evento para SQS (assincronamente)
-	// Isso n�o bloqueia a resposta para o cliente.
+	// Isso não bloqueia a resposta para o cliente.
 	go a.sendEvaluationEvent(userID, flagName, result)
 
 	// 4. Retornar a resposta

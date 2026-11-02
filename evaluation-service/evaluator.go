@@ -18,19 +18,19 @@ const (
 	CACHE_TTL = 30 * time.Second
 )
 
-// getDecision � o wrapper principal
+// getDecision é o wrapper principal
 func (a *App) getDecision(userID, flagName string) (bool, error) {
-	// 1. Obter os dados da flag (do cache ou dos servi�os)
+	// 1. Obter os dados da flag (do cache ou dos serviços)
 	info, err := a.getCombinedFlagInfo(flagName)
 	if err != nil {
 		return false, err
 	}
 
-	// 2. Executar a l�gica de avalia��o
+	// 2. Executar a lógica de avaliação
 	return a.runEvaluationLogic(info, userID), nil
 }
 
-// getCombinedFlagInfo busca os dados no Redis, com fallback para os microsservi�os
+// getCombinedFlagInfo busca os dados no Redis, com fallback para os microsserviços
 func (a *App) getCombinedFlagInfo(flagName string) (*CombinedFlagInfo, error) {
 	cacheKey := fmt.Sprintf("flag_info:%s", flagName)
 
@@ -48,7 +48,7 @@ func (a *App) getCombinedFlagInfo(flagName string) (*CombinedFlagInfo, error) {
 	}
 	
 	log.Printf("Cache MISS para flag '%s'", flagName)
-	// 2. Cache MISS - Buscar dos servi�os
+	// 2. Cache MISS - Buscar dos serviços
 	info, err := a.fetchFromServices(flagName)
 	if err != nil {
 		return nil, err
@@ -91,7 +91,7 @@ func (a *App) fetchFromServices(flagName string) (*CombinedFlagInfo, error) {
 	}
 	if ruleErr != nil {
         if _, missing := ruleErr.(*NotFoundError); !missing { return nil, ruleErr }
-		log.Printf("Aviso: Nenhuma regra de segmenta��o encontrada para '%s'. Usando padr�o.", flagName)
+		log.Printf("Aviso: Nenhuma regra de segmentação encontrada para '%s'. Usando padrão.", flagName)
 	}
 
 	return &CombinedFlagInfo{
@@ -100,7 +100,7 @@ func (a *App) fetchFromServices(flagName string) (*CombinedFlagInfo, error) {
 	}, nil
 }
 
-// fetchFlag (fun��o helper)
+// fetchFlag (função helper)
 func (a *App) fetchFlag(flagName string) (*Flag, error) {
 	url := fmt.Sprintf("%s/flags/%s", a.FlagServiceURL, flagName)
 
@@ -142,7 +142,7 @@ func (a *App) fetchRule(flagName string) (*TargetingRule, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusNotFound {
-		return nil, &NotFoundError{flagName} // N�o � um erro fatal
+		return nil, &NotFoundError{flagName} // Não é um erro fatal
 	}
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("targeting-service retornou status %d", resp.StatusCode)
@@ -156,7 +156,7 @@ func (a *App) fetchRule(flagName string) (*TargetingRule, error) {
 	return &rule, nil
 }
 
-// runEvaluationLogic � onde a decis�o � tomada
+// runEvaluationLogic é onde a decisão é tomada
 func (a *App) runEvaluationLogic(info *CombinedFlagInfo, userID string) bool {
 	if info.Flag == nil || !info.Flag.IsEnabled {
 		return false
@@ -166,17 +166,17 @@ func (a *App) runEvaluationLogic(info *CombinedFlagInfo, userID string) bool {
 		return true
 	}
 
-	// 3. Processa a regra (s� temos "PERCENTAGE" por enquanto)
+	// 3. Processa a regra (só temos "PERCENTAGE" por enquanto)
 	rule := info.Rule.Rules
 	if rule.Type == "PERCENTAGE" {
-		// Converte o 'value' (que � interface{}) para float64
+		// Converte o 'value' (que é interface{}) para float64
 		percentage, ok := rule.Value.(float64)
 		if !ok {
-			log.Printf("Erro: valor da regra de porcentagem n�o � um n�mero para a flag '%s'", info.Flag.Name)
+			log.Printf("Erro: valor da regra de porcentagem não é um número para a flag '%s'", info.Flag.Name)
 			return false
 		}
 		
-		// Calcula o "bucket" do usu�rio (0-99)
+		// Calcula o "bucket" do usuário (0-99)
 		userBucket := getDeterministicBucket(userID + info.Flag.Name)
 		
 		if float64(userBucket) < percentage {
@@ -188,7 +188,7 @@ func (a *App) runEvaluationLogic(info *CombinedFlagInfo, userID string) bool {
 }
 
 func getDeterministicBucket(input string) int {
-	// Usamos SHA1 (r�pido) e pegamos os primeiros 4 bytes
+	// Usamos SHA1 (rápido) e pegamos os primeiros 4 bytes
 	hasher := sha1.New()
 	hasher.Write([]byte(input))
 	hash := hasher.Sum(nil)
@@ -196,6 +196,6 @@ func getDeterministicBucket(input string) int {
 	// Converte 4 bytes para um uint32
 	val := binary.BigEndian.Uint32(hash[:4])
 	
-	// Retorna o m�dulo 100
+	// Retorna o módulo 100
 	return int(val % 100)
 }

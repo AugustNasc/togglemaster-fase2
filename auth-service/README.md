@@ -1,15 +1,15 @@
 # auth-service (Go)
 
-Este � o servi�o de autentica��o do projeto ToggleMaster. Ele � respons�vel por criar e validar chaves de API.
+Este é o serviço de autenticação do projeto ToggleMaster. Ele é responsável por criar e validar chaves de API.
 
-## ?? Pr�-requisitos (Local)
+## 📦 Pré-requisitos (Local)
 
-* [Go](https://go.dev/doc/install) (vers�o 1.21 ou superior)
-* [PostgreSQL](https://www.postgresql.org/download/) (rodando localmente ou em um cont�iner Docker)
+* [Go](https://go.dev/doc/install) (versão 1.21 ou superior)
+* [PostgreSQL](https://www.postgresql.org/download/) (rodando localmente ou em um contêiner Docker)
 
-## ?? Rodando Localmente
+## 🚀 Rodando Localmente
 
-1.  **Clone o reposit�rio** e entre na pasta `auth-service`.
+1.  **Clone o repositório** e entre na pasta `auth-service`.
 
 2.  **Prepare o Banco de Dados:**
     * Crie um banco de dados no seu PostgreSQL (ex: `auth_db`).
@@ -18,40 +18,40 @@ Este � o servi�o de autentica��o do projeto ToggleMaster. Ele � respon
         psql -U seu_usuario -d auth_db -f db/init.sql
         ```
 
-3.  **Configure as Vari�veis de Ambiente:**
-    Crie um arquivo chamado `.env` na raiz desta pasta (`auth-service/`) com o seguinte conte�do:
+3.  **Configure as Variáveis de Ambiente:**
+    Crie um arquivo chamado `.env` na raiz desta pasta (`auth-service/`) com o seguinte conteúdo:
     ```.env
-    # String de conex�o do seu banco de dados PostgreSQL
+    # String de conexão do seu banco de dados PostgreSQL
     DATABASE_URL="postgres://SEU_USUARIO:SUA_SENHA@localhost:5432/auth_db"
     
-    # Porta que o servi�o ir� rodar
+    # Porta que o serviço irá rodar
     PORT="8001"
     
     # Chave mestra para criar novas chaves de API
     MASTER_KEY="admin-secreto-123"
     ```
 
-4.  **Instale as Depend�ncias:**
+4.  **Instale as Dependências:**
     ```bash
     go mod tidy
     ```
 
-5.  **Inicie o Servi�o:**
+5.  **Inicie o Serviço:**
     ```bash
     go run .
     ```
-    O servidor estar� rodando em `http://localhost:8001`.
+    O servidor estará rodando em `http://localhost:8001`.
 
-## ?? Testando os Endpoints
+## 🧪 Testando os Endpoints
 
-Voc� pode usar `curl` ou Postman.
+Você pode usar `curl` ou Postman.
 
-**1. Verifique a Sa�de (Health Check):**
+**1. Verifique a Saúde (Health Check):**
 ```bash
 curl http://localhost:8001/health
 ```
 
-Sa�da esperada: `{"status":"ok"}`
+Saída esperada: `{"status":"ok"}`
 
 **2. Crie uma nova Chave de API (requer a MASTER_KEY):**
 
@@ -62,30 +62,30 @@ curl -X POST http://localhost:8001/admin/keys \
 -d '{"name": "meu-primeiro-servico"}'
 ``` 
 
-Sa�da esperada (A SUA CHAVE SER� DIFERENTE):
+Saída esperada (A SUA CHAVE SERÁ DIFERENTE):
 
 ```json
 {
   "name": "meu-primeiro-servico",
   "key": "tm_key_a1b2c3d4...",
-  "message": "Guarde esta chave com seguran�a! Voc� n�o poder� v�-la novamente."
+  "message": "Guarde esta chave com segurança! Você não poderá vê-la novamente."
 }
 ```
 
-**3. Valide a Chave que voc� acabou de criar: (Substitua tm_key_... pela chave exata que voc� recebeu no passo anterior)**
+**3. Valide a Chave que você acabou de criar: (Substitua tm_key_... pela chave exata que você recebeu no passo anterior)**
 
 ```bash
 curl http://localhost:8001/validate \
 -H "Authorization: Bearer tm_key_a1b2c3d4..."
 ```
 
-Sa�da esperada: `{"message":"Chave v�lida"}`
+Saída esperada: `{"message":"Chave válida"}`
 
-**4. Teste uma Chave Inv�lida:**
+**4. Teste uma Chave Inválida:**
 
 ```bash
 curl http://localhost:8001/validate \
 -H "Authorization: Bearer chave-errada-123"
 ```
 
-Sa�da esperada: `Chave de API inv�lida ou inativa`
+Saída esperada: `Chave de API inválida ou inativa`

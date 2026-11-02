@@ -20,22 +20,22 @@ type TargetingRule struct {
 	Rules      Rule   `json:"rules"` // O objeto JSONB
 }
 
-// Rule � o objeto JSONB aninhado
+// Rule é o objeto JSONB aninhado
 type Rule struct {
 	Type  string      `json:"type"`  // ex: "PERCENTAGE"
 	Value interface{} `json:"value"` // ex: 50
 }
 
-// CombinedFlagInfo � a estrutura que salvamos no cache
+// CombinedFlagInfo é a estrutura que salvamos no cache
 type CombinedFlagInfo struct {
 	Flag *Flag
 	Rule *TargetingRule
 }
 
-// NotFoundError � um erro customizado
+// NotFoundError é um erro customizado
 type NotFoundError struct {
 	FlagName string
 }
 func (e *NotFoundError) Error() string {
-	return fmt.Sprintf("flag ou regra '%s' n�o encontrada", e.FlagName)
+	return fmt.Sprintf("flag ou regra '%s' não encontrada", e.FlagName)
 }

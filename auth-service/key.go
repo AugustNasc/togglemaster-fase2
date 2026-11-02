@@ -6,13 +6,13 @@ import (
 	"encoding/hex"
 )
 
-// generateAPIKey cria uma string aleat�ria segura de 32 bytes
+// generateAPIKey cria uma string aleatória segura de 32 bytes
 func generateAPIKey() (string, error) {
 	bytes := make([]byte, 32) // 32 bytes = 256 bits de entropia
 	if _, err := rand.Read(bytes); err != nil {
 		return "", err
 	}
-	// Prefixo para facilitar a identifica��o da chave
+	// Prefixo para facilitar a identificação da chave
 	return "tm_key_" + hex.EncodeToString(bytes), nil
 }
 

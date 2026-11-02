@@ -1,0 +1,7 @@
+{
+  "origem": "Transcricao da saida observada no CloudShell",
+  "arquivo_remoto": "/home/cloudshell-user/togglemaster-fase2/gravacao/evidencias-atuais/carga-20261102-225205.json",
+  "comando": "python3 gravacao/carga_gravacao.py --segundos 15 --clientes 1 --limite 10",
+  "contagem": {"tentativas": 10, "respostas_esperadas": 10, "falhas": 0},
+  "finalidade": "Verificar o script com carga pequena; nao demonstrar escala"
+}

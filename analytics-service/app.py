@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 # Carrega .env para desenvolvimento local
 load_dotenv()
 
-# --- Configura��o ---
+# --- Configuração ---
 AWS_REGION = os.getenv("AWS_REGION")
 SQS_QUEUE_URL = os.getenv("AWS_SQS_URL")
 DYNAMODB_TABLE_NAME = os.getenv("AWS_DYNAMODB_TABLE")
@@ -27,14 +27,14 @@ if not all([AWS_REGION, SQS_QUEUE_URL, DYNAMODB_TABLE_NAME]):
     sys.exit(1)
 
 # --- Clientes Boto3 ---
-# Criamos a sess�o uma vez
+# Criamos a sessão uma vez
 try:
     session = boto3.Session(region_name=AWS_REGION)
     sqs_client = session.client("sqs")
     dynamodb_client = session.client("dynamodb", endpoint_url=os.getenv("DYNAMODB_ENDPOINT_URL") or None)
-    log.info(f"Clientes Boto3 inicializados na regi�o {AWS_REGION}")
+    log.info(f"Clientes Boto3 inicializados na região {AWS_REGION}")
 except NoCredentialsError:
-    log.critical("Credenciais da AWS n�o encontradas. Verifique seu ambiente.")
+    log.critical("Credenciais da AWS não encontradas. Verifique seu ambiente.")
     sys.exit(1)
 except Exception as e:
     log.critical(f"Erro ao inicializar o Boto3: {e}")
@@ -44,15 +44,15 @@ except Exception as e:
 # --- SQS Worker ---
 
 def process_message(message):
-    """ Processa uma �nica mensagem SQS e a insere no DynamoDB """
+    """ Processa uma única mensagem SQS e a insere no DynamoDB """
     try:
         log.info(f"Processando mensagem ID: {message['MessageId']}")
         body = json.loads(message['Body'])
         
-        # Gera um ID �nico para o item no DynamoDB
+        # Gera um ID único para o item no DynamoDB
         event_id = message['MessageId']
         
-        # Constr�i o item no formato do DynamoDB
+        # Constrói o item no formato do DynamoDB
         item = {
             'event_id': {'S': event_id},
             'user_id': {'S': body['user_id']},
@@ -77,23 +77,23 @@ def process_message(message):
         
     except json.JSONDecodeError:
         log.error(f"Erro ao decodificar JSON da mensagem ID: {message['MessageId']}")
-        # N�o deleta a mensagem, pode ser uma "poison pill"
+        # Não deleta a mensagem, pode ser uma "poison pill"
     except ClientError as e:
         log.error(f"Erro do Boto3 (DynamoDB ou SQS) ao processar {message['MessageId']}: {e}")
-        # N�o deleta a mensagem, tenta novamente
+        # Não deleta a mensagem, tenta novamente
     except Exception as e:
         log.error(f"Erro inesperado ao processar {message['MessageId']}: {e}")
-        # N�o deleta a mensagem, tenta novamente
+        # Não deleta a mensagem, tenta novamente
 
 def sqs_worker_loop():
     """ Loop principal do worker que ouve a fila SQS """
     log.info("Iniciando o worker SQS...")
     while True:
         try:
-            # Long-polling: espera at� 20s por mensagens
+            # Long-polling: espera até 20s por mensagens
             response = sqs_client.receive_message(
                 QueueUrl=SQS_QUEUE_URL,
-                MaxNumberOfMessages=10,  # Processa em lotes de at� 10
+                MaxNumberOfMessages=10,  # Processa em lotes de até 10
                 WaitTimeSeconds=20
             )
             
@@ -120,10 +120,10 @@ app = Flask(__name__)
 
 @app.route('/health')
 def health():
-    # Uma verifica��o de sa�de real poderia checar a conex�o com o DynamoDB/SQS
+    # Uma verificação de saúde real poderia checar a conexão com o DynamoDB/SQS
     return jsonify({"status": "ok"})
 
-# --- Inicializa��o ---
+# --- Inicialização ---
 
 def start_worker():
     """ Inicia o worker SQS em uma thread separada """

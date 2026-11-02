@@ -1,29 +1,29 @@
 # analytics-service (Python)
 
-Este � o servi�o de an�lise (analytics) do projeto ToggleMaster. Ele � um *worker* de backend e n�o possui uma API p�blica (exceto `/health`).
+Este é o serviço de análise (analytics) do projeto ToggleMaster. Ele é um *worker* de backend e não possui uma API pública (exceto `/health`).
 
-Sua �nica fun��o �:
+Sua única função é:
 1.  Ouvir constantemente a fila do **AWS SQS** (que o `evaluation-service` preenche).
 2.  Consumir as mensagens de evento da fila.
-3.  Gravar os dados de an�lise em uma tabela do **AWS DynamoDB**.
+3.  Gravar os dados de análise em uma tabela do **AWS DynamoDB**.
 
-## ?? Pr�-requisitos (Local)
+## 📦 Pré-requisitos (Local)
 
-* [Python](https://www.python.org/) (vers�o 3.9 ou superior)
-* **Credenciais da AWS:** Este servi�o **DEVE** ter credenciais da AWS para acessar SQS e DynamoDB. Configure-as em seu terminal (via `aws configure`) ou defina as vari�veis de ambiente:
+* [Python](https://www.python.org/) (versão 3.9 ou superior)
+* **Credenciais da AWS:** Este serviço **DEVE** ter credenciais da AWS para acessar SQS e DynamoDB. Configure-as em seu terminal (via `aws configure`) ou defina as variáveis de ambiente:
     * `AWS_ACCESS_KEY_ID`
     * `AWS_SECRET_ACCESS_KEY`
     * `AWS_SESSION_TOKEN` (se estiver usando o AWS Academy)
-* **Recursos da AWS:** Voc� precisa ter criado a Fila SQS e a Tabela DynamoDB no console.
+* **Recursos da AWS:** Você precisa ter criado a Fila SQS e a Tabela DynamoDB no console.
 
-## ?? Preparando o DynamoDB
+## 🚀 Preparando o DynamoDB
 
-Este servi�o espera que uma tabela espec�fica exista no DynamoDB.
+Este serviço espera que uma tabela específica exista no DynamoDB.
 
 **Nome da Tabela:** `ToggleMasterAnalytics`
-**Chave Prim�ria (Partition Key):** `event_id` (do tipo String)
+**Chave Primária (Partition Key):** `event_id` (do tipo String)
 
-Voc� pode criar esta tabela usando o console da AWS ou com o seguinte comando da AWS CLI:
+Você pode criar esta tabela usando o console da AWS ou com o seguinte comando da AWS CLI:
 
 ```bash
 aws dynamodb create-table \
@@ -35,51 +35,51 @@ aws dynamodb create-table \
     --provisioned-throughput \
         ReadCapacityUnits=1,WriteCapacityUnits=1
 ```
-(Nota: O throughput provisionado acima � o m�nimo poss�vel, ideal para o free tier/testes).
+(Nota: O throughput provisionado acima é o mínimo possível, ideal para o free tier/testes).
 
-## ?? Rodando Localmente
-**1. Clone o reposit�rio** e entre na pasta `analytics-service`.
+## 🚀 Rodando Localmente
+**1. Clone o repositório** e entre na pasta `analytics-service`.
 
-**2. Configure as Vari�veis de Ambiente:** Crie um arquivo chamado `.env` na raiz desta pasta (`analytics-service/`) com o seguinte conte�do. **Garanta que suas credenciais da AWS tamb�m estejam configuradas no seu ambiente.**
+**2. Configure as Variáveis de Ambiente:** Crie um arquivo chamado `.env` na raiz desta pasta (`analytics-service/`) com o seguinte conteúdo. **Garanta que suas credenciais da AWS também estejam configuradas no seu ambiente.**
 ```.env
-# Porta que este servi�o (health check) ir� rodar
+# Porta que este serviço (health check) irá rodar
 PORT="8005"
 
-# --- Configura��o da AWS ---
-# Cole a URL da fila SQS que voc� criou
+# --- Configuração da AWS ---
+# Cole a URL da fila SQS que você criou
 AWS_SQS_URL="httpsiso://[sqs.us-east-1.amazonaws.com/123456789012/sua-fila](https://sqs.us-east-1.amazonaws.com/123456789012/sua-fila)"
 
-# Nome da tabela DynamoDB que voc� criou
+# Nome da tabela DynamoDB que você criou
 AWS_DYNAMODB_TABLE="ToggleMasterAnalytics"
 
-# Regi�o dos seus servi�os SQS e DynamoDB
+# Região dos seus serviços SQS e DynamoDB
 AWS_REGION="us-east-1"
 ```
 
-**3. Instale as Depend�ncias:**
+**3. Instale as Dependências:**
 ```bash
 pip install -r requirements.txt
 ```
 
-**4. Inicie o Servi�o:**
+**4. Inicie o Serviço:**
 ```bash
 gunicorn --bind 0.0.0.0:8005 app:app
 ```
-O servidor estar� rodando em `http://localhost:8005`. Voc� ver� logs no terminal assim que o worker SQS iniciar e (eventualmente) processar mensagens.
+O servidor estará rodando em `http://localhost:8005`. Você verá logs no terminal assim que o worker SQS iniciar e (eventualmente) processar mensagens.
 
-## ?? Testando o Servi�o
+## 🧪 Testando o Serviço
 
-Testar este servi�o � diferente. Voc� n�o vai chamar uma API dele.
+Testar este serviço é diferente. Você não vai chamar uma API dele.
 
-**1. Verifique a Sa�de:**
+**1. Verifique a Saúde:**
 ```bash
 curl http://localhost:8005/health
 ```
-Sa�da esperada: `{"status":"ok"}``
+Saída esperada: `{"status":"ok"}``
 
 **2. Gere Eventos:**
 
-- V� para o `evaluation-service` (que deve estar rodando) e fa�a algumas requisi��es de avalia��o:
+- Vá para o `evaluation-service` (que deve estar rodando) e faça algumas requisições de avaliação:
 ```bash
 curl "http://localhost:8004/evaluate?user_id=test-user-1&flag_name=enable-new-dashboard"
 curl "http://localhost:8004/evaluate?user_id=test-user-2&flag_name=enable-new-dashboard"
@@ -88,7 +88,7 @@ curl "http://localhost:8004/evaluate?user_id=test-user-2&flag_name=enable-new-da
 
 **3. Observe os Logs:**
 
-No terminal do `analytics-service`, voc� dever� ver os logs aparecendo, indicando que as mensagens foram recebidas e salvas no DynamoDB:
+No terminal do `analytics-service`, você deverá ver os logs aparecendo, indicando que as mensagens foram recebidas e salvas no DynamoDB:
 ```bash
 INFO:Iniciando o worker SQS...
 INFO:Recebidas 2 mensagens.
@@ -100,6 +100,6 @@ INFO:Evento ... (Flag: enable-new-dashboard) salvo no DynamoDB.
 
 **4. Verifique o DynamoDB:**
 
-V� at� o console da AWS, abra o **DynamoDB**, selecione a tabela `ToggleMasterAnalytics` e clique em "Explore table items".
+Vá até o console da AWS, abra o **DynamoDB**, selecione a tabela `ToggleMasterAnalytics` e clique em "Explore table items".
 
-Voc� ver� os itens que o worker acabou de inserir.
+Você verá os itens que o worker acabou de inserir.
