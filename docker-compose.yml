@@ -1,4 +1,4 @@
-name: togglemaster
+name: togglemaster-fase2
 services:
   postgres-auth:
     image: postgres:16-alpine

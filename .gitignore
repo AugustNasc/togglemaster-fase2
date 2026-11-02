@@ -1,4 +1,8 @@
 .env
+togglemaster-local.env
+togglemaster-local-expira.txt
+local-smoke-result.json
+local-validation.json
 *.secret.yaml
 __pycache__/
 

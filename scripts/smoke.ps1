@@ -9,5 +9,6 @@ Invoke-RestMethod -Method Post -Uri (Url 8002 "/flags") -Headers $headers -Conte
 Invoke-RestMethod -Method Post -Uri (Url 8003 "/rules") -Headers $headers -ContentType "application/json" -Body (@{flag_name=$name;rules=@{type="PERCENTAGE";value=100}}|ConvertTo-Json -Depth 4) | Out-Null
 $result=Invoke-RestMethod -Uri (Url 8004 "/evaluate?user_id=smoke-user&flag_name=$name")
 if($result.result -ne $true){throw "Avaliacao deveria retornar true"}
+@{flag=$name;evaluation=$result;passed=$true} | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $PSScriptRoot '..\local-smoke-result.json') -Encoding utf8
 Write-Output "Fluxo HTTP aprovado. Confira separadamente SQS e DynamoDB."
 

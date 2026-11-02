@@ -24,6 +24,8 @@ powershell -File scripts/smoke.ps1
 
 O Compose tem nove serviços: cinco aplicações, dois PostgreSQL, Redis e DynamoDB Local. A SQS fica na AWS. A execução conjunta dos nove contêineres ainda precisa ser validada.
 
+No Windows, `INICIAR-FASE2.ps1` reúne a inicialização e a validação dos nove contêineres, da avaliação e do evento no DynamoDB Local. A fila local usa acesso temporário restrito à SQS; a configuração preenchida não entra no Git.
+
 ## AWS
 
 O ambiente usa EKS na região `us-east-2`, imagens no ECR, PostgreSQL no RDS, ElastiCache Redis, SQS Standard e DynamoDB. O acesso público passa pelo NLB e pelo NGINX, expondo apenas `/evaluate`. A comunicação interna usa Services ClusterIP.
