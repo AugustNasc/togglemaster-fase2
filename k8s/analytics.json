@@ -1,0 +1,201 @@
+{
+  "apiVersion": "v1",
+  "kind": "List",
+  "items": [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "analytics-service",
+        "namespace": "tm-analytics"
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "analytics-service"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "analytics-service"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "envFrom": [
+                  {
+                    "configMapRef": {
+                      "name": "app-config"
+                    }
+                  },
+                  {
+                    "secretRef": {
+                      "name": "app-secrets"
+                    }
+                  }
+                ],
+                "image": "699191579246.dkr.ecr.us-east-2.amazonaws.com/analytics-service:fase2-v2",
+                "imagePullPolicy": "IfNotPresent",
+                "livenessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/health",
+                    "port": 8005,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 20,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+                },
+                "name": "app",
+                "ports": [
+                  {
+                    "containerPort": 8005,
+                    "protocol": "TCP"
+                  }
+                ],
+                "readinessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/health",
+                    "port": 8005,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+                },
+                "resources": {
+                  "limits": {
+                    "cpu": "500m",
+                    "memory": "256Mi"
+                  },
+                  "requests": {
+                    "cpu": "25m",
+                    "memory": "128Mi"
+                  }
+                },
+                "securityContext": {
+                  "allowPrivilegeEscalation": false,
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  }
+                },
+                "startupProbe": {
+                  "failureThreshold": 30,
+                  "httpGet": {
+                    "path": "/health",
+                    "port": 8005,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 5,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {
+              "fsGroup": 65534,
+              "runAsNonRoot": true,
+              "runAsUser": 10001
+            },
+            "serviceAccount": "analytics-service",
+            "serviceAccountName": "analytics-service",
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "name": "analytics-service",
+        "namespace": "tm-analytics"
+      },
+      "spec": {
+        "internalTrafficPolicy": "Cluster",
+        "ports": [
+          {
+            "port": 8005,
+            "protocol": "TCP",
+            "targetPort": 8005
+          }
+        ],
+        "selector": {
+          "app": "analytics-service"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "data": {
+        "AWS_DYNAMODB_TABLE": "ToggleMasterAnalytics",
+        "AWS_REGION": "us-east-2",
+        "PORT": "8005"
+      },
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "app-config",
+        "namespace": "tm-analytics"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "name": "analytics-service",
+        "namespace": "tm-analytics"
+      }
+    },
+    {
+      "apiVersion": "autoscaling/v2",
+      "kind": "HorizontalPodAutoscaler",
+      "metadata": {
+        "name": "analytics",
+        "namespace": "tm-analytics"
+      },
+      "spec": {
+        "maxReplicas": 5,
+        "metrics": [
+          {
+            "resource": {
+              "name": "cpu",
+              "target": {
+                "averageUtilization": 70,
+                "type": "Utilization"
+              }
+            },
+            "type": "Resource"
+          }
+        ],
+        "minReplicas": 1,
+        "scaleTargetRef": {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "name": "analytics-service"
+        }
+      }
+    }
+  ]
+}

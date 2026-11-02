@@ -1,0 +1,172 @@
+{
+  "apiVersion": "v1",
+  "kind": "List",
+  "items": [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "flag-service",
+        "namespace": "tm-flag"
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "flag-service"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "flag-service"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "envFrom": [
+                  {
+                    "configMapRef": {
+                      "name": "app-config"
+                    }
+                  },
+                  {
+                    "secretRef": {
+                      "name": "app-secrets"
+                    }
+                  }
+                ],
+                "image": "699191579246.dkr.ecr.us-east-2.amazonaws.com/flag-service:fase2-v2",
+                "imagePullPolicy": "IfNotPresent",
+                "livenessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/health",
+                    "port": 8002,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 20,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+                },
+                "name": "app",
+                "ports": [
+                  {
+                    "containerPort": 8002,
+                    "protocol": "TCP"
+                  }
+                ],
+                "readinessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/health",
+                    "port": 8002,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+                },
+                "resources": {
+                  "limits": {
+                    "cpu": "500m",
+                    "memory": "256Mi"
+                  },
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "128Mi"
+                  }
+                },
+                "securityContext": {
+                  "allowPrivilegeEscalation": false,
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  }
+                },
+                "startupProbe": {
+                  "failureThreshold": 30,
+                  "httpGet": {
+                    "path": "/health",
+                    "port": 8002,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 5,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {
+              "fsGroup": 65534,
+              "runAsNonRoot": true,
+              "runAsUser": 10001
+            },
+            "serviceAccount": "flag-service",
+            "serviceAccountName": "flag-service",
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "name": "flag-service",
+        "namespace": "tm-flag"
+      },
+      "spec": {
+        "internalTrafficPolicy": "Cluster",
+        "ports": [
+          {
+            "port": 8002,
+            "protocol": "TCP",
+            "targetPort": 8002
+          }
+        ],
+        "selector": {
+          "app": "flag-service"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "data": {
+        "AUTH_SERVICE_URL": "http://auth-service.tm-auth.svc.cluster.local:8001",
+        "PORT": "8002"
+      },
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "app-config",
+        "namespace": "tm-flag"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "name": "flag-service",
+        "namespace": "tm-flag"
+      }
+    }
+  ]
+}

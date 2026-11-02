@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tm-auth
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tm-flag
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tm-targeting
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tm-evaluation
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tm-analytics
+

@@ -1,0 +1,10 @@
+{
+  "flag": "demo-8d8f1648",
+  "evaluation": {
+    "flag_name": "demo-8d8f1648",
+    "user_id": "demo-user",
+    "result": true
+  },
+  "dynamodb_events": 1,
+  "passed": true
+}

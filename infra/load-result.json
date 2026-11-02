@@ -1,0 +1,951 @@
+{
+  "requests": {
+    "ok": 40352,
+    "error": 112
+  },
+  "samples": [
+    {
+      "elapsed": 0,
+      "hpas": [
+        {
+          "namespace": "tm-analytics",
+          "name": "analytics",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:17Z",
+                "message": "recommended size matches current size",
+                "reason": "ReadyForNewScale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:57:47Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:53:02Z",
+                "message": "the desired count is within the acceptable range",
+                "reason": "DesiredWithinRange",
+                "status": "False",
+                "type": "ScalingLimited"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 4,
+                    "averageValue": "1m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 1,
+            "desiredReplicas": 1,
+            "observedGeneration": 1
+          }
+        },
+        {
+          "namespace": "tm-evaluation",
+          "name": "evaluation",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:11Z",
+                "message": "recommended size matches current size",
+                "reason": "ReadyForNewScale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the desired count is within the acceptable range",
+                "reason": "DesiredWithinRange",
+                "status": "False",
+                "type": "ScalingLimited"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 1,
+                    "averageValue": "1m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 1,
+            "desiredReplicas": 1,
+            "observedGeneration": 1
+          }
+        }
+      ]
+    },
+    {
+      "elapsed": 15,
+      "hpas": [
+        {
+          "namespace": "tm-analytics",
+          "name": "analytics",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:17Z",
+                "message": "recommended size matches current size",
+                "reason": "ReadyForNewScale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:57:47Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:53:02Z",
+                "message": "the desired count is within the acceptable range",
+                "reason": "DesiredWithinRange",
+                "status": "False",
+                "type": "ScalingLimited"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 4,
+                    "averageValue": "1m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 1,
+            "desiredReplicas": 1,
+            "observedGeneration": 1
+          }
+        },
+        {
+          "namespace": "tm-evaluation",
+          "name": "evaluation",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:11Z",
+                "message": "recommended size matches current size",
+                "reason": "ReadyForNewScale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the desired count is within the acceptable range",
+                "reason": "DesiredWithinRange",
+                "status": "False",
+                "type": "ScalingLimited"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 1,
+                    "averageValue": "1m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 1,
+            "desiredReplicas": 1,
+            "observedGeneration": 1
+          }
+        }
+      ]
+    },
+    {
+      "elapsed": 30,
+      "hpas": [
+        {
+          "namespace": "tm-analytics",
+          "name": "analytics",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:17Z",
+                "message": "recommended size matches current size",
+                "reason": "ReadyForNewScale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:57:47Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:53:02Z",
+                "message": "the desired count is within the acceptable range",
+                "reason": "DesiredWithinRange",
+                "status": "False",
+                "type": "ScalingLimited"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 12,
+                    "averageValue": "3m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 1,
+            "desiredReplicas": 1,
+            "observedGeneration": 1
+          }
+        },
+        {
+          "namespace": "tm-evaluation",
+          "name": "evaluation",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:11Z",
+                "message": "the HPA controller was able to update the target scale to 4",
+                "reason": "SucceededRescale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the desired replica count is increasing faster than the maximum scale rate",
+                "reason": "ScaleUpLimit",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 501,
+                    "averageValue": "501m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 1,
+            "desiredReplicas": 4,
+            "lastScaleTime": "2026-11-02T22:01:42Z",
+            "observedGeneration": 1
+          }
+        }
+      ]
+    },
+    {
+      "elapsed": 45,
+      "hpas": [
+        {
+          "namespace": "tm-analytics",
+          "name": "analytics",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:17Z",
+                "message": "the HPA controller was able to update the target scale to 4",
+                "reason": "SucceededRescale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:57:47Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the desired replica count is increasing faster than the maximum scale rate",
+                "reason": "ScaleUpLimit",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 1148,
+                    "averageValue": "287m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 1,
+            "desiredReplicas": 4,
+            "lastScaleTime": "2026-11-02T22:01:48Z",
+            "observedGeneration": 1
+          }
+        },
+        {
+          "namespace": "tm-evaluation",
+          "name": "evaluation",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:11Z",
+                "message": "the HPA controller was able to update the target scale to 5",
+                "reason": "SucceededRescale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 499,
+                    "averageValue": "499m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 4,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:01:57Z",
+            "observedGeneration": 1
+          }
+        }
+      ]
+    },
+    {
+      "elapsed": 60,
+      "hpas": [
+        {
+          "namespace": "tm-analytics",
+          "name": "analytics",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:17Z",
+                "message": "the HPA controller was able to update the target scale to 5",
+                "reason": "SucceededRescale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:57:47Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 1160,
+                    "averageValue": "290m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 4,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:02:03Z",
+            "observedGeneration": 1
+          }
+        },
+        {
+          "namespace": "tm-evaluation",
+          "name": "evaluation",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:11Z",
+                "message": "recommended size matches current size",
+                "reason": "ReadyForNewScale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 201,
+                    "averageValue": "201m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 5,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:01:57Z",
+            "observedGeneration": 1
+          }
+        }
+      ]
+    },
+    {
+      "elapsed": 75,
+      "hpas": [
+        {
+          "namespace": "tm-analytics",
+          "name": "analytics",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:17Z",
+                "message": "recommended size matches current size",
+                "reason": "ReadyForNewScale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:57:47Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 1268,
+                    "averageValue": "317m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 5,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:02:03Z",
+            "observedGeneration": 1
+          }
+        },
+        {
+          "namespace": "tm-evaluation",
+          "name": "evaluation",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:11Z",
+                "message": "recent recommendations were higher than current one, applying the highest recent recommendation",
+                "reason": "ScaleDownStabilized",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 132,
+                    "averageValue": "132m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 5,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:01:57Z",
+            "observedGeneration": 1
+          }
+        }
+      ]
+    },
+    {
+      "elapsed": 90,
+      "hpas": [
+        {
+          "namespace": "tm-analytics",
+          "name": "analytics",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:17Z",
+                "message": "recent recommendations were higher than current one, applying the highest recent recommendation",
+                "reason": "ScaleDownStabilized",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:57:47Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 1248,
+                    "averageValue": "312m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 5,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:02:03Z",
+            "observedGeneration": 1
+          }
+        },
+        {
+          "namespace": "tm-evaluation",
+          "name": "evaluation",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:11Z",
+                "message": "recent recommendations were higher than current one, applying the highest recent recommendation",
+                "reason": "ScaleDownStabilized",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 135,
+                    "averageValue": "135m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 5,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:01:57Z",
+            "observedGeneration": 1
+          }
+        }
+      ]
+    },
+    {
+      "elapsed": 105,
+      "hpas": [
+        {
+          "namespace": "tm-analytics",
+          "name": "analytics",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:17Z",
+                "message": "recommended size matches current size",
+                "reason": "ReadyForNewScale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:57:47Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 1312,
+                    "averageValue": "328m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 5,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:02:03Z",
+            "observedGeneration": 1
+          }
+        },
+        {
+          "namespace": "tm-evaluation",
+          "name": "evaluation",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:11Z",
+                "message": "recommended size matches current size",
+                "reason": "ReadyForNewScale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 154,
+                    "averageValue": "154m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 5,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:01:57Z",
+            "observedGeneration": 1
+          }
+        }
+      ]
+    },
+    {
+      "elapsed": 120,
+      "hpas": [
+        {
+          "namespace": "tm-analytics",
+          "name": "analytics",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:17Z",
+                "message": "recommended size matches current size",
+                "reason": "ReadyForNewScale",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:57:47Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:48Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 1300,
+                    "averageValue": "325m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 5,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:02:03Z",
+            "observedGeneration": 1
+          }
+        },
+        {
+          "namespace": "tm-evaluation",
+          "name": "evaluation",
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-11-02T21:52:11Z",
+                "message": "recent recommendations were higher than current one, applying the highest recent recommendation",
+                "reason": "ScaleDownStabilized",
+                "status": "True",
+                "type": "AbleToScale"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T21:52:41Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the desired replica count is more than the maximum replica count",
+                "reason": "TooManyReplicas",
+                "status": "True",
+                "type": "ScalingLimited"
+              },
+              {
+                "lastTransitionTime": "2026-11-02T22:01:42Z",
+                "message": "the HPA controller did not scale the workload to zero",
+                "reason": "NotScaledToZero",
+                "status": "False",
+                "type": "ScaledToZero"
+              }
+            ],
+            "currentMetrics": [
+              {
+                "resource": {
+                  "current": {
+                    "averageUtilization": 120,
+                    "averageValue": "120m"
+                  },
+                  "name": "cpu"
+                },
+                "type": "Resource"
+              }
+            ],
+            "currentReplicas": 5,
+            "desiredReplicas": 5,
+            "lastScaleTime": "2026-11-02T22:01:57Z",
+            "observedGeneration": 1
+          }
+        }
+      ]
+    }
+  ],
+  "seconds": 120,
+  "concurrency": 32
+}

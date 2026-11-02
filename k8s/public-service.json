@@ -1,0 +1,29 @@
+{
+  "apiVersion": "v1",
+  "kind": "Service",
+  "metadata": {
+    "name": "togglemaster-public",
+    "namespace": "nginx-ingress",
+    "annotations": {
+      "service.beta.kubernetes.io/aws-load-balancer-scheme": "internet-facing",
+      "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type": "ip",
+      "service.beta.kubernetes.io/aws-load-balancer-subnets": "subnet-03787d51ed05696cc,subnet-0b08c10401d2e127d,subnet-0145f60c47323c01b"
+    }
+  },
+  "spec": {
+    "type": "LoadBalancer",
+    "loadBalancerClass": "service.k8s.aws/nlb",
+    "selector": {
+      "app.kubernetes.io/instance": "nginx",
+      "app.kubernetes.io/name": "nginx-ingress"
+    },
+    "ports": [
+      {
+        "name": "http",
+        "port": 80,
+        "targetPort": 80,
+        "protocol": "TCP"
+      }
+    ]
+  }
+}

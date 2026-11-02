@@ -1,0 +1,32 @@
+{
+  "apiVersion": "networking.k8s.io/v1",
+  "kind": "Ingress",
+  "metadata": {
+    "name": "evaluation-public",
+    "namespace": "tm-evaluation"
+  },
+  "spec": {
+    "ingressClassName": "nginx",
+    "rules": [
+      {
+        "host": "k8s-nginxing-togglema-8f6e8dfb5a-abc942c96fbc4fd8.elb.us-east-2.amazonaws.com",
+        "http": {
+          "paths": [
+            {
+              "path": "/evaluate",
+              "pathType": "Exact",
+              "backend": {
+                "service": {
+                  "name": "evaluation-service",
+                  "port": {
+                    "number": 8004
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

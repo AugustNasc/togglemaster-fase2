@@ -1,0 +1,1 @@
+O plano gratuito recusou uma terceira instancia RDS. Por decisao do grupo, flags_db e targeting_db compartilham togglemaster-flags, com usuarios separados. auth_db permanece em togglemaster-auth. Esta adaptacao NAO atende literalmente ao requisito de tres instancias RDS independentes.

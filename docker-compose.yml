@@ -1,0 +1,105 @@
+name: togglemaster
+services:
+  postgres-auth:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_local
+    volumes:
+      - auth-data:/var/lib/postgresql/data
+      - ./local/init-auth.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U auth_user -d auth_db"]
+      interval: 5s
+      retries: 20
+  postgres-shared:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: admin_local
+    volumes:
+      - shared-data:/var/lib/postgresql/data
+      - ./local/init-shared.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 20
+  dynamodb:
+    image: amazon/dynamodb-local:2.6.1
+    command: "-jar DynamoDBLocal.jar -sharedDb -inMemory"
+  auth-service:
+    build: ./auth-service
+    restart: on-failure
+    ports: ["127.0.0.1:8001:8001"]
+    environment:
+      PORT: "8001"
+      DATABASE_URL: "postgres://auth_user:auth_local@postgres-auth:5432/auth_db?sslmode=disable"
+      MASTER_KEY: "${MASTER_KEY:-dev-master-key}"
+    depends_on:
+      postgres-auth:
+        condition: service_healthy
+  flag-service:
+    build: ./flag-service
+    restart: on-failure
+    ports: ["127.0.0.1:8002:8002"]
+    environment:
+      PORT: "8002"
+      DATABASE_URL: "postgres://flags_user:flags_local@postgres-shared:5432/flags_db?sslmode=disable"
+      AUTH_SERVICE_URL: "http://auth-service:8001"
+    depends_on:
+      postgres-shared:
+        condition: service_healthy
+  targeting-service:
+    build: ./targeting-service
+    restart: on-failure
+    ports: ["127.0.0.1:8003:8003"]
+    environment:
+      PORT: "8003"
+      DATABASE_URL: "postgres://targeting_user:targeting_local@postgres-shared:5432/targeting_db?sslmode=disable"
+      AUTH_SERVICE_URL: "http://auth-service:8001"
+    depends_on:
+      postgres-shared:
+        condition: service_healthy
+  evaluation-service:
+    build: ./evaluation-service
+    restart: on-failure
+    ports: ["127.0.0.1:8004:8004"]
+    environment:
+      PORT: "8004"
+      REDIS_URL: "redis://redis:6379"
+      FLAG_SERVICE_URL: "http://flag-service:8002"
+      TARGETING_SERVICE_URL: "http://targeting-service:8003"
+      SERVICE_API_KEY: "${SERVICE_API_KEY:-dev-service-key}"
+      AWS_REGION: "${AWS_REGION:-us-east-1}"
+      AWS_SQS_URL: "${AWS_SQS_URL:?Preencha a URL da fila SQS no .env}"
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID:?Preencha credenciais temporarias no .env}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY:?Preencha credenciais temporarias no .env}"
+      AWS_SESSION_TOKEN: "${AWS_SESSION_TOKEN:-}"
+    depends_on:
+      redis:
+        condition: service_healthy
+  analytics-service:
+    build: ./analytics-service
+    restart: on-failure
+    ports: ["127.0.0.1:8005:8005"]
+    environment:
+      PORT: "8005"
+      AWS_DYNAMODB_TABLE: "ToggleMasterAnalytics"
+      DYNAMODB_ENDPOINT_URL: "http://dynamodb:8000"
+      AWS_REGION: "${AWS_REGION:-us-east-1}"
+      AWS_SQS_URL: "${AWS_SQS_URL:?Preencha a URL da fila SQS no .env}"
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID:?Preencha credenciais temporarias no .env}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY:?Preencha credenciais temporarias no .env}"
+      AWS_SESSION_TOKEN: "${AWS_SESSION_TOKEN:-}"
+    command: ["sh", "-c", "python init_local.py && exec gunicorn --workers 1 --bind 0.0.0.0:8005 app:app"]
+    volumes: ["./local/init-dynamo.py:/app/init_local.py:ro"]
+volumes:
+  auth-data:
+  shared-data:
+

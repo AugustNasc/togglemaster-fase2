@@ -1,0 +1,8 @@
+{
+  "url": "http://k8s-nginxing-togglema-8f6e8dfb5a-abc942c96fbc4fd8.elb.us-east-2.amazonaws.com/evaluate?user_id=public-demo&flag_name=demo-8d8f1648",
+  "result": {
+    "flag_name": "demo-8d8f1648",
+    "user_id": "public-demo",
+    "result": true
+  }
+}
