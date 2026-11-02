@@ -2,8 +2,6 @@
 
 Tech Challenge - Fase 2
 
-Augusto Nascimento de Almeida - RM 376571
-
 Aplicação de feature flags com cinco microsserviços, usando o código-base da [FIAP-TCs](https://github.com/FIAP-TCs).
 
 - **auth:** valida as chaves de acesso.
@@ -19,10 +17,10 @@ Copiar `.env.example` para `.env` e preencher a região, uma fila SQS exclusiva 
 ```powershell
 docker compose up --build -d
 docker compose ps
-powershell -File scripts/smoke.ps1
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File scripts/smoke.ps1
 ```
 
-O Compose tem nove serviços: cinco aplicações, dois PostgreSQL, Redis e DynamoDB Local. A SQS fica na AWS. A execução conjunta dos nove contêineres ainda precisa ser validada.
+O Compose tem nove serviços: cinco aplicações, dois PostgreSQL, Redis e DynamoDB Local. A SQS fica na AWS. O teste local de 02/11/2026 confirmou os nove contêineres em execução, a avaliação verdadeira e o evento no DynamoDB Local.
 
 No Windows, `INICIAR-FASE2.ps1` reúne a inicialização e a validação dos nove contêineres, da avaliação e do evento no DynamoDB Local. A fila local usa acesso temporário restrito à SQS; a configuração preenchida não entra no Git.
 

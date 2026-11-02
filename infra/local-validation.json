@@ -1,0 +1,7 @@
+{
+  "flag": "smoke-b52092a6",
+  "tested_at": "2026-11-02T20:42:42.1130185-03:00",
+  "containers": 9,
+  "dynamodb_events": 1,
+  "passed": true
+}
