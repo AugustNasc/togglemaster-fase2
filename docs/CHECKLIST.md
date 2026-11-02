@@ -18,7 +18,7 @@
 - [ ] Confirmar com o professor a adapta��o de dois RDS; o requisito literal � tr�s inst�ncias independentes.
 - [x] Criar o reposit�rio privado https://github.com/AugustNasc/togglemaster-fase2.
 - [ ] Liberar acesso ao reposit�rio para avalia��o e conferir o conte�do publicado.
-- [ ] Preencher nome completo, RM e Discord de todos os integrantes em `RELATORIO.md`.
+- [x] Integrante �nico: Augusto Nascimento de Almeida; RM 376571; e-mail rm376571@fiap.com.br; Discord `thecash` (exibi��o: TheCash).
 - [ ] Gravar o v�deo (at� 20 minutos), seguindo `ROTEIRO-VIDEO.md`, e copiar o link acess�vel.
 - [ ] Preencher links do reposit�rio e do v�deo, revisar e gerar a vers�o final do relat�rio PDF.
 - [ ] Validar abertura do endpoint pela rede usada na grava��o; houve resposta p�blica no CloudShell, mas o Chrome local apresentou erro.

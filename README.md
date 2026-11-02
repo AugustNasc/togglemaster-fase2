@@ -84,6 +84,6 @@ As probes `/health` verificam o processo, n�o todas as depend�ncias. Os even
 
 ## O que falta para entregar
 
-Veja `docs/CHECKLIST.md`. O reposit�rio privado � https://github.com/AugustNasc/togglemaster-fase2. Restam a demonstra��o local dos 9 cont�ineres, liberar acesso para avalia��o, gravar o v�deo de at� 20 minutos, preencher nomes/RM/Discord e o link do v�deo no relat�rio, e confirmar a aceita��o dos dois RDS. N�o envie o relat�rio com campos pendentes. Ap�s a carga, os dois HPAs retornaram automaticamente a uma r�plica; foi solicitado o retorno do grupo para dois n�s.
+Veja `docs/CHECKLIST.md`. O reposit�rio privado � https://github.com/AugustNasc/togglemaster-fase2. Integrante �nico: Augusto Nascimento de Almeida, RM 376571, Discord `thecash`. Restam a demonstra��o local dos 9 cont�ineres, liberar acesso para avalia��o, gravar o v�deo de at� 20 minutos, inserir seu link no relat�rio e confirmar a aceita��o dos dois RDS. N�o envie o relat�rio com campos pendentes. Ap�s a carga, os dois HPAs retornaram automaticamente a uma r�plica; foi solicitado o retorno do grupo para dois n�s.
 
 Os recursos AWS continuam ativos e consomem cr�ditos. Ap�s concluir a grava��o e guardar o necess�rio, revise o invent�rio antes de desativar o ambiente. N�o apague bancos sem avaliar seus dados.

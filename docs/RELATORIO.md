@@ -4,7 +4,10 @@ Tech Challenge - DevOps e Arquitetura Cloud - Fase 2
 
 Status: vers�o para revis�o. Preencha os dados abaixo antes de enviar.
 
-Participantes: PENDENTE - nome completo, RM e Discord de cada integrante.
+Integrante �nico: Augusto Nascimento de Almeida.
+RM: 376571.
+E-mail FIAP: rm376571@fiap.com.br.
+Discord: thecash (nome de exibi��o: TheCash).
 Reposit�rio do grupo: https://github.com/AugustNasc/togglemaster-fase2 (privado; liberar acesso para avalia��o).
 V�deo (at� 20 minutos): PENDENTE.
 Data da execu��o: 02/11/2026.
@@ -36,7 +39,7 @@ O Compose cont�m exatamente nove servi�os: cinco aplica��es, dois Postgr
 
 Os endpoints /health verificam o processo, n�o todas as depend�ncias. O envio de eventos pelo evaluation n�o tem outbox; falhas de envio podem perder eventos. O cache pode atrasar mudan�as de configura��o em at� 30 segundos. Os resultados s�o de laborat�rio e n�o comprovam uma meta de disponibilidade. O node group inicial com t3.medium falhou por restri��o da conta e foi mantido com capacidade zero. H� recursos tempor�rios de bootstrap em tm-setup a remover ap�s confer�ncia.
 
-Faltam preencher os integrantes, liberar acesso de avalia��o ao reposit�rio, concluir a demonstra��o local, gravar o v�deo e inserir seu link. Nenhuma entrega foi enviada � FIAP. O badge Google Cloud Skills Boost � opcional e n�o foi inclu�do.
+Faltam liberar acesso de avalia��o ao reposit�rio, concluir a demonstra��o local, gravar o v�deo e inserir seu link. Nenhuma entrega foi enviada � FIAP. O badge Google Cloud Skills Boost � opcional e n�o foi inclu�do.
 
 ## Refer�ncias
 
